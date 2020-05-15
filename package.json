@@ -19,7 +19,7 @@
     "url": "git+https://github.com/aimorris/game-of-life.git"
   },
   "author": "Adam Morris",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aimorris/game-of-life/issues"
   },
