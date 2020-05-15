@@ -12,9 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "spago build",
-    "test": "spago test",
-    "run": "spago run"
+    "build": "spago build"
   },
   "repository": {
     "type": "git",
