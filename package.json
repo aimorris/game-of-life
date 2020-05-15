@@ -12,7 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "spago build"
+    "build": "spago bundle-app -t dist/index.js"
   },
   "repository": {
     "type": "git",
