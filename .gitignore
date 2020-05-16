@@ -4,9 +4,9 @@
 /output/
 /generated-docs/
 /.psc-package/
+/dist/
 /.psc*
 /.purs*
 /.psa*
 /.spago
-/dist/life
 index.js
