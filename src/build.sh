@@ -16,6 +16,7 @@ for file in src/life/*; do
     mkdir dist/life/$filename
   fi
 
+  cat /src/site/index.html > /dist/index.html
   cat src/site/life.html > dist/life/$filename/index.html
 
   spago bundle-app -m $modulename -t dist/life/$filename/index.js
