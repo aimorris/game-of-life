@@ -14,6 +14,8 @@ import Color.Scale.Perceptual (magma)
 import Data.Int (toNumber)
 import Effect.Console
 import Effect.Timer
+import Data.Array
+import Data.Maybe
 
 type Board = Array (Array Int)
 
@@ -42,7 +44,7 @@ main = do
 
 loop :: Board -> Context2D -> Effect Unit
 loop board ctx = do
-  _ <- traverseWithIndex (\i a -> traverseWithIndex (drawCell ctx i) a) board
+  _ <- traverseWithIndex (\i a -> traverseWithIndex (setCell ctx i) a) board
   _ <- setTimeout 1000 (loop board ctx)
   pure unit
 
@@ -53,10 +55,13 @@ getCellStyle :: Int -> FillStyle
 getCellStyle x = fillColor $ rgba active active active 1.0
   where active = (1 - x) * 255
 
-drawCell :: Context2D -> Int -> Int -> Int -> Effect Unit
-drawCell ctx rowIndex colIndex isActive = do
+getCell :: Board -> Int -> Int -> Maybe Int
+getCell board x y = (fromMaybe [] (board!!x))!!y
+
+setCell :: Context2D -> Int -> Int -> Int -> Effect Unit
+setCell ctx rowIndex colIndex isActive = do
   render ctx $
     filled (getCellStyle isActive) $
-      rectangle (mul cellSize $ toNumber rowIndex) (mul cellSize $ toNumber colIndex) (cellSize - spacing) (cellSize - spacing)
+      rectangle (mul cellSize $ toNumber colIndex) (mul cellSize $ toNumber rowIndex) (cellSize - spacing) (cellSize - spacing)
   where cellSize = 50.0
         spacing = 1.0
