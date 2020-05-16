@@ -51,6 +51,18 @@ loop board ctx = do
 nextGeneration :: Board -> Board
 nextGeneration board = board
 
+countNeighbours :: Board -> Int -> Int -> Int
+countNeighbours board x y =
+  (fromMaybe 0 $ getCell board (x - 1) (y - 1)) +
+  (fromMaybe 0 $ getCell board (x - 1) (y)) +
+  (fromMaybe 0 $ getCell board (x - 1) (y + 1)) +
+  (fromMaybe 0 $ getCell board (x + 1) (y - 1)) +
+  (fromMaybe 0 $ getCell board (x + 1) (y)) +
+  (fromMaybe 0 $ getCell board (x + 1) (y + 1)) +
+  (fromMaybe 0 $ getCell board (x) (y - 1)) +
+  (fromMaybe 0 $ getCell board (x) (y + 1))
+
+
 getCellStyle :: Int -> FillStyle
 getCellStyle x = fillColor $ rgba active active active 1.0
   where active = (1 - x) * 255
