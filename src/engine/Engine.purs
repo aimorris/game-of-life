@@ -39,7 +39,7 @@ renderLife pattern = do
 loop :: Board -> Context2D -> Effect Unit
 loop board ctx = do
   _ <- traverseWithIndex (\x a -> traverseWithIndex (\y -> drawCells ctx (Tuple x y)) a) board
-  _ <- setTimeout 500 (loop (nextGeneration board) ctx)
+  _ <- setTimeout 300 (loop (nextGeneration board) ctx)
   pure unit
 
 nextGeneration :: Board -> Board
