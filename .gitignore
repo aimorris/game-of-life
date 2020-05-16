@@ -8,5 +8,5 @@
 /.purs*
 /.psa*
 /.spago
-/dist/
+/dist/life
 index.js
