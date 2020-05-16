@@ -1,4 +1,4 @@
-module OneBeacon where
+module Pattern1Beacon where
 
 import Effect (Effect)
 import Prelude (Unit)
@@ -6,8 +6,8 @@ import Engine (renderLife)
 
 type Board = Array (Array Int)
 
-oneBeacon :: Board
-oneBeacon =
+pattern1Beacon :: Board
+pattern1Beacon =
   [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 1, 0, 0, 0, 0],
@@ -22,4 +22,4 @@ oneBeacon =
 
 main :: Effect Unit
 main = do
-  renderLife oneBeacon
+  renderLife pattern1Beacon
