@@ -17,7 +17,7 @@ type Board = Array (Array Int)
 type Pos = Tuple Int Int
 
 cellSize :: Number
-cellSize = 30.0
+cellSize = 20.0
 
 spacing :: Number
 spacing = 1.0
