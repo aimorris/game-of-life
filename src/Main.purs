@@ -16,23 +16,22 @@ import Effect.Console
 import Effect.Timer
 import Data.Array
 import Data.Maybe
+import Data.Tuple
 
 type Board = Array (Array Int)
 
 startingPosition :: Board
 startingPosition =
   [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 1, 0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 1, 0, 1, 1, 0],
+    [0, 1, 1, 0, 1, 0, 0, 1, 0],
+    [0, 0, 1, 0, 1, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
 
 main :: Effect Unit
@@ -45,11 +44,19 @@ main = do
 loop :: Board -> Context2D -> Effect Unit
 loop board ctx = do
   _ <- traverseWithIndex (\i a -> traverseWithIndex (setCell ctx i) a) board
-  _ <- setTimeout 1000 (loop board ctx)
+  _ <- setTimeout 500 (loop (nextGeneration board) ctx)
   pure unit
 
 nextGeneration :: Board -> Board
-nextGeneration board = board
+nextGeneration board = mapWithIndex (\x a -> mapWithIndex (\y cell -> lives board x y cell) a) board
+
+lives :: Board -> Int -> Int -> Int -> Int
+lives board x y current = case Tuple (countNeighbours board x y) (current) of
+  Tuple 0 1 -> 0
+  Tuple 1 1 -> 0
+  Tuple 2 1 -> 1
+  Tuple 3 _ -> 1
+  _ -> 0
 
 countNeighbours :: Board -> Int -> Int -> Int
 countNeighbours board x y =
