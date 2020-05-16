@@ -17,7 +17,6 @@ for file in src/life/*; do
   fi
 
   cat src/site/life.html > dist/life/$filename/index.html
-  cat src/site/index.html > dist/index.html
 
   spago bundle-app -m $modulename -t dist/life/$filename/index.js
 done
