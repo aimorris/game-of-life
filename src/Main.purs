@@ -7,14 +7,17 @@ import Effect (Effect)
 import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D)
 import Graphics.Drawing (FillStyle, rectangle, fillColor, filled, render)
 import Partial.Unsafe (unsafePartial)
-import Prelude (Unit, bind, map, ($), (*), (+), (/=), (-), discard, mul)
+import Prelude
 import Color
 import Color.Scale (sample)
 import Color.Scale.Perceptual (magma)
 import Data.Int (toNumber)
 import Effect.Console
+import Effect.Timer
 
-startingPosition :: Array (Array Int)
+type Board = Array (Array Int)
+
+startingPosition :: Board
 startingPosition =
   [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -30,12 +33,21 @@ startingPosition =
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
 
-main :: Effect (Array (Array Unit))
+main :: Effect Unit
 main = do
   mcanvas <- getCanvasElementById "canvas"
   ctx <- getContext2D $ unsafePartial $ fromJust mcanvas
 
-  traverseWithIndex (\i a -> traverseWithIndex (drawCell ctx i) a ) startingPosition
+  loop startingPosition ctx
+
+loop :: Board -> Context2D -> Effect Unit
+loop board ctx = do
+  _ <- traverseWithIndex (\i a -> traverseWithIndex (drawCell ctx i) a) board
+  _ <- setTimeout 1000 (loop board ctx)
+  pure unit
+
+nextGeneration :: Board -> Board
+nextGeneration board = board
 
 getCellStyle :: Int -> FillStyle
 getCellStyle x = fillColor $ rgba active active active 1.0
