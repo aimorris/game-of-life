@@ -1,22 +1,17 @@
 module Engine where
 
+import Data.Maybe (Maybe, fromJust, fromMaybe)
+import Color (rgba)
+import Data.Array (mapWithIndex, (!!))
+import Data.Int (toNumber)
 import Data.TraversableWithIndex (traverseWithIndex)
-
-import Data.Maybe (fromJust)
+import Data.Tuple (Tuple(..))
 import Effect (Effect)
+import Effect.Timer (setTimeout)
 import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D)
 import Graphics.Drawing (FillStyle, rectangle, fillColor, filled, render)
 import Partial.Unsafe (unsafePartial)
-import Prelude
-import Color
-import Color.Scale (sample)
-import Color.Scale.Perceptual (magma)
-import Data.Int (toNumber)
-import Effect.Console
-import Effect.Timer
-import Data.Array
-import Data.Maybe
-import Data.Tuple
+import Prelude (Unit, bind, mul, pure, unit, ($), (*), (+), (-))
 
 type Board = Array (Array Int)
 type Pos = Tuple Int Int
