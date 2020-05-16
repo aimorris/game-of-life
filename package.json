@@ -1,0 +1,22 @@
+{
+  "name": "game-of-life",
+  "version": "1.0.0",
+  "description": "Conway's Game of Life implementation in PureScript",
+  "dependencies": {
+    "purescript": "^0.13.6",
+    "spago": "^0.15.2"
+  },
+  "scripts": {
+    "build": "./src/build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aimorris/game-of-life.git"
+  },
+  "author": "Adam Morris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aimorris/game-of-life/issues"
+  },
+  "homepage": "https://game-of-life.aimorris.com"
+}
