@@ -31,8 +31,8 @@ renderLife pattern = do
   let cols = toNumber $ length (unsafePartial $ fromJust $ pattern!!0)
   let rows = toNumber $ length pattern
 
-  setCanvasHeight canvas (cols * cellSize)
-  setCanvasWidth canvas (rows * cellSize)
+  setCanvasHeight canvas (rows * cellSize)
+  setCanvasWidth canvas (cols * cellSize)
   
   loop pattern ctx
 
