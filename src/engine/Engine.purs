@@ -1,25 +1,38 @@
 module Engine where
 
-import Data.Maybe (Maybe, fromJust, fromMaybe)
 import Color (rgba)
-import Data.Array (mapWithIndex, (!!))
+import Data.Array (mapWithIndex, (!!), length)
 import Data.Int (toNumber)
+import Data.Maybe (Maybe, fromJust, fromMaybe)
 import Data.TraversableWithIndex (traverseWithIndex)
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Timer (setTimeout)
-import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D)
+import Graphics.Canvas (Context2D, getCanvasElementById, getContext2D, setCanvasHeight, setCanvasWidth)
 import Graphics.Drawing (FillStyle, rectangle, fillColor, filled, render)
 import Partial.Unsafe (unsafePartial)
-import Prelude (Unit, bind, mul, pure, unit, ($), (*), (+), (-))
+import Prelude (Unit, bind, mul, pure, unit, ($), (*), (+), (-), discard)
 
 type Board = Array (Array Int)
 type Pos = Tuple Int Int
 
+cellSize :: Number
+cellSize = 50.0
+
+spacing :: Number
+spacing = 1.0
+
 renderLife :: Board -> Effect Unit
 renderLife pattern = do
   mcanvas <- getCanvasElementById "canvas"
-  ctx <- getContext2D $ unsafePartial $ fromJust mcanvas
+  let canvas = unsafePartial $ fromJust mcanvas
+  ctx <- getContext2D canvas
+
+  let cols = toNumber $ length (unsafePartial $ fromJust $ pattern!!0)
+  let rows = toNumber $ length pattern
+
+  setCanvasHeight canvas (cols * cellSize)
+  setCanvasWidth canvas (rows * cellSize)
   
   loop pattern ctx
 
@@ -64,5 +77,3 @@ drawCells ctx (Tuple x y) isActive = do
   render ctx $
     filled (getCellStyle isActive) $
       rectangle (mul cellSize $ toNumber y) (mul cellSize $ toNumber x) (cellSize - spacing) (cellSize - spacing)
-  where cellSize = 50.0
-        spacing = 1.0
