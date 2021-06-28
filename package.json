@@ -7,7 +7,7 @@
     "spago": "^0.15.2"
   },
   "scripts": {
-    "build": "./src/build.sh"
+    "build": "./scripts/build.sh"
   },
   "repository": {
     "type": "git",
